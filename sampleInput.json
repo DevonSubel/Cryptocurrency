@@ -1,0 +1,1 @@
+{"0": [{"TYPE": "TRANS", "SIGNATURE": 34626634, "HASH": 12345678, "OUTPUT": [[10, "A"], [50, "B"]], "INPUT": [[0, 1]]}], "1": [{"TYPE": "TRANS", "SIGNATURE": 346234, "HASH": 12345278, "OUTPUT": [[2, "B"], [30, "A"]], "INPUT": [[1, 0]]}]}

@@ -16,10 +16,15 @@ class Transaction(object):
         print(self.tinput)
         print(self.toutput)
 
-    def transfer(self):
+
+# Figure out where to transfer, merge, join transactions
+
+# Example input & output 
+# output = [(amount, key), (amount, key)]
+# input = [(transaction, index), (transaction, index)]
 
 
-output = {}
+output = []
 myinput = {}
 
 tra = Transaction("transfer", "id", myinput , output, "signature")

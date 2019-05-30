@@ -1,17 +1,60 @@
-
-# Function to verify a transaction -> go through entire ledger to check 
-
-# structure to hold unverified pool ->array
-# read the input file and randomly add transactions to pool 
+# Devon making the input files. reading input files
+# For every transaction in file, instatiate transaction object
+# Add object to unverified transaction pool
 
 
-# Threads to simulate different nodes
-# at each node :
-    # proof of work funciton that picks from the unverified pool and does puzzle 
-    # if node solves puzzle, add the 
+# Figure out how to launch threads 
 
 
-# Once a transaction has been verified, add it to the verified transaction pol 
+class node(object):    
+    # get a transactiosn at random from pool 
+    # verify the transaction by running trhough the ledger to check balance
+    # add the transaction to block along with nonce
+    # run proof of work puzzle on a block
+    # if node finds puzzle for a block, broadcast it to the rest of the nodes
+
+
+    # need to broadcast the blocks to other nodes 
+
+
+    # Receive blocks from other nodes and update local ledger to 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+arr = [1] * 10
+
+nd = node()
+
+nd.printArr()
+
+for c in arr:
+    print(c)
+
+arr = [3] * 10
+
+nd.printArr()
+
+
 
 
 

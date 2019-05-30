@@ -3,10 +3,10 @@
 class Transaction(object):
     
     def __init__(self, ttype, tid, tinput, toutput, signature):
-        self.type = ttype
-        self.id = tid
-        self.input = tinput
-        self.output = toutput
+        self.ttype = ttype
+        self.tid = tid
+        self.tinput = tinput
+        self.toutput = toutput
         self.signature = signature
 
 
@@ -24,10 +24,10 @@ class Transaction(object):
 # input = [(transaction, index), (transaction, index)]
 
 
-output = []
+output = {}
 myinput = {}
 
-tra = Transaction("transfer", "id", myinput , output, "signature")
+tra = Transaction("transfer", "id", "input" , "output", "signature")
 tra.printFields()
 
 

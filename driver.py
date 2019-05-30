@@ -6,9 +6,19 @@
 # Figure out how to launch threads 
 
 
-class node(object):    
+class node(object):
+
+    # Each node will have to get a copy from the ledger
+    
+
     # get a transactiosn at random from pool 
+    
+    
     # verify the transaction by running trhough the ledger to check balance
+    def verifyTransaction(self):
+
+        
+
     # add the transaction to block along with nonce
     # run proof of work puzzle on a block
     # if node finds puzzle for a block, broadcast it to the rest of the nodes

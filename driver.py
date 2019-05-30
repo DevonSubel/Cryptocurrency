@@ -8,8 +8,8 @@
 
 class node(object):
 
-    # Each node will have to get a copy from the ledger
-    
+    # Each node will have to get a copy of the ledger
+
 
     # get a transactiosn at random from pool 
     

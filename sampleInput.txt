@@ -1,0 +1,21 @@
+{
+   "HASH": 12345678,
+   "TYPE": 'TRANS',
+   "INPUT": [(0,1)],
+   "OUTPUT": [(10,A),(50,B)],
+   "SIGNATURE": 34626634
+}
+{
+   "HASH": 123458,
+   "TYPE": 'TRANS',
+   "INPUT": [(1,1)],
+   "OUTPUT": [(20,B),(10,B)],
+   "SIGNATURE": 346634
+}
+{
+   "HASH": 2345678,
+   "TYPE": 'TRANS',
+   "INPUT": [(2,1)],
+   "OUTPUT": [(5,A),(0,C)],
+   "SIGNATURE": 34626634
+}

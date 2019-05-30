@@ -62,6 +62,7 @@ class node(object):
         # Each node will have to get a copy of the ledger
         # Figure out how to get current ledger for new node entering network
         # detect any forks in the ledger. atuomatically switch to longest chain 
+        # detect any forks 
 
     def getTransactionFromPool(self):
         # get a transactiosn at random from pool 
@@ -88,6 +89,7 @@ class node(object):
         # will  probably get updated ledger or maybe just new block
 
         # return true if new block
+        # detect forks 
 
     def broadcastNewBlock(self):
         # Broadcast the blocks to other nodes since theyre threads in same program

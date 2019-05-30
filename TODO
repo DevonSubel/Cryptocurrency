@@ -2,5 +2,8 @@
 
 2. Ask prof Peterson what transferring, merging, and joining transactions means. 
 
+3. If there's a fork in the blockchain and a block gets thrown away, add the transactions from that block
+back to the unverified pool 
+
 
 

@@ -4,7 +4,7 @@ class TransactionPools(self):
     # Holds unverified and verified trasaction pools 
     # Once a transaction has been verified, move it to the verified pool
 
-
+    # allTransactionsList = () //list of all transactions 
     # unverifiedPool = () //list for holding verified transactions
     # verifiedPool = ()   //list for holding verified transactions
     
@@ -27,9 +27,8 @@ class TransactionPools(self):
 class driver(self):
     
 
-    def __init__(self, numNodes, initialDifficulty, transactionsFile):
+    def __init__(self, numNodes, transactionsFile):
         self.numNodes = numNodes
-        self.initialDifficulty = initialDifficulty
         self.transactionsFile = transactionsFile
 
 
@@ -76,7 +75,7 @@ class node(object):
         # return true if transaction is valid
 
     
-    def solvedPuzzle(block, randomVal, difficulty):
+    def solvedPuzzle(block, nonce):
         # Run proof of work
         # hash the block with randomVal until the hash has n number of zeroes. denoted by difficulty argument
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
@@ -101,6 +100,7 @@ class node(object):
     def receiveNewBlocks(self):
         print("checking for new solved blocks broadcast to newtwork")
 
+    # infinite loop that calls mineBlock 
 
 
     def mineBlock(self):

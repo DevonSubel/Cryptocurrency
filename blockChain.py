@@ -1,9 +1,12 @@
-
+import Crypto 
+import hashlib
 
 
 class block(object):
-    # Block contains transactions
+    # Block contains:
+    # single transaction 
     # 
+
 
 
 class blockChain(object)

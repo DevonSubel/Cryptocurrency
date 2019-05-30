@@ -18,6 +18,9 @@ class Transaction(object):
 
 
 # Figure out where to transfer, merge, join transactions
+#   # Transferring - one input to another input
+    # Merging: putting two inputs from the same person into a single transaction
+    # Joining: putting two inputs from different people into a single transction
 
 # Example input & output 
 # output = [(amount, key), (amount, key)]

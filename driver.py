@@ -1,31 +1,68 @@
 # Devon making the input files. reading input files
-# For every transaction in file, instatiate transaction object
+# For every transaction in file, instantiate transaction object
 # Add object to unverified transaction pool
 
 
 # Figure out how to launch threads 
 
-
 class node(object):
 
-    # Each node will have to get a copy of the ledger
+    def getLedgerFromNetwork():
+        print("getting current ledger from network")
+        # Each node will have to get a copy of the ledger
+        # Figure out how to get current ledger for new node entering network
+        # detect any forks in the ledger. atuomatically switch to longest chain 
 
-    # get a transactiosn at random from pool 
+    def getTransactionFromPool(self):
+        # get a transactiosn at random from pool 
+        # verify the transaction by running trhough the ledger to check balance
     
-    # verify the transaction by running trhough the ledger to check balance
-    def verifyTransaction(self):
+    
+    def validTransaction(self):
+        # Make sure that a transaction has not been double-spend ie been used as the input to other transactions more than once. 
+        # run through ledger to verify that transaction is valid and input has not been already spent
 
-        z
-    # Make sure that a transaction has not been double-spend ie been used as the input to other transactions
-    # more than once. 
-    # add the transaction to block along with nonce
-    # run proof of work puzzle on a block
-    # if node finds puzzle for a block, broadcast it to the rest of the nodes
+        # return true if transaction is valid
 
+    
+    def solvedPuzzle(block, iterator, difficulty):
+        # Run proof of work
+        # hash the block with iterator until the hash has a certain number of zeroes. denoted by difficulty
+        # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
+
+    def createBaseBlock(transaction):
+        # creates base block from transaction to run it through the puzzle 
+
+    def blockSolved():
+        # Check the node network to see if a block  has aleady been solved. 
+
+
+    def mineBlock(self):
+        transaction = getTransactionFromPool(self)
+
+        if(validTransaction(transaction) != "TRUE"):
+            return 
+
+        # Begin mining block
+        block = createBaseBlock(transaction)
+        for iterator in range(5000):
+
+            if(solvedPuzzle(block, iterator)):
+                broadcastNewBlock()
+            
+            if(newBlockSolvedByNetwork()):
+                # Check the newtwork for new blocks that have been solved. stop the current mining 
+                receiveNewBlocks()
+                continue
 
     # need to broadcast the blocks to other nodes 
+    def broadcastNewBlock(self):
+        print("SOlved puzzle. Broadcasting new block")
+
 
     # Receive blocks from other nodes and update local ledger to 
+    def receiveNewBlocks(self):
+        print("checking for new solved blocks broadcast to newtwork")
 
 
 

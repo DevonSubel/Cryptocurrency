@@ -1,5 +1,3 @@
-
-
 class Transaction(object):
     
     def __init__(self, ttype, tid, tinput, toutput, signature):

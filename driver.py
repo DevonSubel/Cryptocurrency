@@ -1,19 +1,28 @@
+import threading 
+import os
+from node import *
+from transaction import *
+from transactionPool import *
+from blockChain import *
+
 class driver(self):
     
-
     def __init__(self, numNodes, transactionsFile):
         self.numNodes = numNodes
         self.transactionsFile = transactionsFile
-
-
-    # create genesis block ie initial blockchain 
 
 
     # instantiate transaction pools
     # Make sure that unverified pool data struct can be read by all nodes
     pools = TransactionPools()
 
+    # create genesis block ie initial blockchain 
+    # add genesis block to Verified Transaction Pool 
     
+    
+    for node in range(self.numNodes):
+
+
     # Launch numNodes number of nodes. pass in pool reference
     # Make sure that pool reference can be modified by the nodes. 
     # Figure out how first node will get ledger. probably pass in genesis block to every node
@@ -26,8 +35,9 @@ class driver(self):
         # and to print out when new blocks have been solved 
 
 
+# transactionfile /=
 
 pool = Transaction(transactionFile)
 
-driver(, pool )
+driver = driver(10, "transaction file")
 

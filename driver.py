@@ -3,7 +3,23 @@
 # Add object to unverified transaction pool
 
 
-# Figure out how to launch threads 
+class driver(self):
+    
+
+    def __init__(self, numNodes, initialDifficulty, transactionsFile):
+        self.numNodes = numNodes
+        self.initialDifficulty = initialDifficulty
+        self.transactionsFile = transactionsFile
+
+
+    # create genesis block ie initial blockchain 
+
+    # Read intput file and create unverified pool (probably an array)
+    # Make sure that unverified pool data struct can be read by all nodes
+
+    # Launch numNodes number of nodes nodes. pass in initial difficulty, 
+
+
 
 class node(object):
 
@@ -25,7 +41,7 @@ class node(object):
         # return true if transaction is valid
 
     
-    def solvedPuzzle(block, iterator, difficulty):
+    def solvedPuzzle(block, random, difficulty):
         # Run proof of work
         # hash the block with iterator until the hash has a certain number of zeroes. denoted by difficulty
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
@@ -45,15 +61,15 @@ class node(object):
 
         # Begin mining block
         block = createBaseBlock(transaction)
-        for iterator in range(5000):
-
-            if(solvedPuzzle(block, iterator)):
+        while True:
+            random = random.random()
+            if(solvedPuzzle(block, random)):
                 broadcastNewBlock()
             
             if(newBlockSolvedByNetwork()):
                 # Check the newtwork for new blocks that have been solved. stop the current mining 
                 receiveNewBlocks()
-                continue
+                return 
 
     # need to broadcast the blocks to other nodes 
     def broadcastNewBlock(self):

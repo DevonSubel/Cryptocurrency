@@ -76,7 +76,8 @@ class node(object):
         block = self.createBaseBlock(transaction)
         while True:
             randint = self.random.random()
-            if(self.solvedPuzzle(block, randint) != "", "", ""):
+            block, nonce, hval = self.solvedPuzzle(block, randint)
+            if(block, nonce, hval != "", "", ""):
                 self.broadcastNewBlock()
             
             if(self.newBlockSolvedByNetwork()):

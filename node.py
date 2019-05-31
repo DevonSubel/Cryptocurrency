@@ -1,3 +1,4 @@
+unverifiedTransactionPool = []
 class node(object):
 
     import hashlib
@@ -19,11 +20,11 @@ class node(object):
         return 0
 
     def getTransactionFromPool(self):
-        # get a transactiosn at random from pool 
-        # verify the transaction calling validTransaction()
-        # if transaction is invalid, mark it using the method in TransactionPools object
-        # repeat until transaction is valid and return it
-        return 0
+        global unverifiedTransactionPool
+        index = self.random.randint(0, len(unverifiedTransactionPool)-1)
+        transaction = unverifiedTransactionPool[index]
+        
+        return transaction
     
 
     

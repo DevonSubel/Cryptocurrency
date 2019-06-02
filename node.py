@@ -1,33 +1,48 @@
+unverifiedTransactionPool = []
 class node(object):
-    
+
+    import hashlib
+    import random
+
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
         # Each node will have to get a copy of the ledger
         # Figure out how to get current ledger for new node entering network
         # detect any forks in the ledger. atuomatically switch to longest chain 
         # detect any forks 
+        return 0
     
-    def validTransaction(self):
+    def validTransaction(self, transaction):
         # Make sure that a transaction has not been double-spent ie been used as the input to other transactions more than once. 
         # run through ledger to verify that transaction is valid and input has not been already spent
 
         # return true if transaction is valid
+        return 0
 
     def getTransactionFromPool(self):
-        # get a transactiosn at random from pool 
-        # verify the transaction calling validTransaction()
-        # if transaction is invalid, mark it using the method in TransactionPools object
-        # repeat until transaction is valid and return it
+        global unverifiedTransactionPool
+        index = self.random.randint(0, len(unverifiedTransactionPool)-1)
+        transaction = unverifiedTransactionPool[index]
+        
+        return transaction
     
 
     
-    def solvedPuzzle(block, nonce):
+    def solvedPuzzle(self, block, nonce):
         # Run proof of work
         # hash the block with randomVal until the hash has n number of zeroes. denoted by difficulty argument
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
+        hval = self.hashlib.sha256(block + str(nonce))
+        if(hval < 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF):
+            return block, nonce, hval 
+        else:
+            return "", "", ""
 
-    def createBaseBlock(transaction):
+
+
+    def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 
+        return 0
 
     def newBlockSolvedByNetwork(self):
         # Check the node network to see if a block  has aleady been solved. 
@@ -35,10 +50,12 @@ class node(object):
 
         # return true if new block
         # detect forks 
+        return 0
 
     def broadcastNewBlock(self):
         # Broadcast the blocks to other nodes since theyre threads in same program
         # Figure out how to do this
+        return 0
         
 
 
@@ -46,25 +63,26 @@ class node(object):
     def receiveNewBlocks(self):
         print("checking for new solved blocks broadcast to newtwork")
 
-    # infinite loop that calls mineBlock 
+    # # infinite loop that calls mineBlock 
 
 
     def mineBlock(self):
-        transaction = getTransactionFromPool(self)
+        transaction = self.getTransactionFromPool()
 
-        if(validTransaction(transaction) != "TRUE"):
+        if(self.validTransaction(transaction) != "TRUE"):
             return 
 
         # Begin mining block
-        block = createBaseBlock(transaction)
+        block = self.createBaseBlock(transaction)
         while True:
-            random = random.random()
-            if(solvedPuzzle(block, random)):
-                broadcastNewBlock()
+            randint = self.random.random()
+            block, nonce, hval = self.solvedPuzzle(block, randint)
+            if(block, nonce, hval != "", "", ""):
+                self.broadcastNewBlock()
             
-            if(newBlockSolvedByNetwork()):
+            if(self.newBlockSolvedByNetwork()):
                 # Check the newtwork for new blocks that have been solved. stop the current mining 
-                receiveNewBlocks()
+                self.receiveNewBlocks()
                 return 
 
     

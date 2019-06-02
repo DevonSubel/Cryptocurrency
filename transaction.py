@@ -1,11 +1,16 @@
 class Transaction(object):
-    
-    def __init__(self, ttype, tid, tinput, toutput, signature):
+    # Note: per the spec, it seems like a transaction is an actual block in the blockchain
+    # If so, we probably don't need a separate block class. 
+
+    def __init__(self, ttype, tid, tinput, toutput, signatures, prevTransHash):
         self.ttype = ttype
-        self.tid = tid
-        self.tinput = tinput
-        self.toutput = toutput
-        self.signature = signature
+        self.tid = tid #Transation ID: SHA256 Hash 
+        self.tinput = tinput #Pointer to one or more prior transaction outputs
+        self.toutput = toutput #A set of public key-coin values
+        self.signatures = signatures #1 or more signatures, signed by whoever is spending coins
+        self.prevTransHash = prevTransHash #Hash pointer to a previous transaction
+        self.nonce #Nonce to be set and iterated when solving puzzle 
+        self.proofOfWork #To be filled after the proof of work puzzle is solved
 
 
     def printFields(self):
@@ -17,14 +22,14 @@ class Transaction(object):
     def toString(self):
         return str(self.ttype) + str(self.tid) + str(self.tinput) + str(self.toutput) + str(self.signature)
 
-# Figure out where to transfer, merge, join transactions
-#   # Transferring - one input to another input
-    # Merging: putting two inputs from the same person into a single transaction
-    # Joining: putting two inputs from different people into a single transction
+    # Figure out where to transfer, merge, join transactions
+    #   # Transferring - one input to another input
+        # Merging: putting two inputs from the same person into a single transaction
+        # Joining: putting two inputs from different people into a single transction
 
-# Example input & output 
-# output = [(amount, key), (amount, key)]
-# input = [(transaction, index), (transaction, index)]
+    # Example input & output 
+    # output = [(amount, key), (amount, key)]
+    # input = [(transaction, index), (transaction, index)]
 
 
 output = {}

@@ -36,6 +36,12 @@ class TransactionPools(object):
     # & move it to the verified pool
         TransactionPools.verifiedPool.append(transaction)
         TransactionPools.unverifiedPool.remove(transaction)
+    
+    def returnTransactionToUnverifiedPool(self, transaction):
+        # Per the spect, if the transaction is invalid because the input doesn’t yet exist, return it to the UTP
+        # TODO:
+        
+    
 
 '''
 pool = TransactionPools()

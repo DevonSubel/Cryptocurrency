@@ -45,24 +45,6 @@ class node(object):
         # creates base block from transaction to run it through the puzzle 
         return 0
 
-    def newBlockSolvedByNetwork(self):
-        # Check the node network to see if a block  has aleady been solved. 
-        # will  probably get updated ledger or maybe just new block
-
-        # return true if new block
-        # detect forks 
-        return 0
-
-    def broadcastNewBlock(self):
-        # Broadcast the blocks to other nodes since theyre threads in same program
-        # Figure out how to do this
-        return 0
-        
-
-
-    # Receive blocks from other nodes and update local ledger to 
-    def receiveNewBlocks(self):
-        print("checking for new solved blocks broadcast to newtwork")
 
     # # infinite loop that calls mineBlock 
 
@@ -78,14 +60,15 @@ class node(object):
             # Begin mining block
             block = self.createBaseBlock(transaction)
             while True:
+                newlen = len(verifiedTransactonPool)
+                if(newlen > verlen):
+                    break 
                 randint = self.random.random()
                 block, nonce, hval = self.solvedPuzzle(block, randint)
                 if(block, nonce, hval != "", "", ""):
                     unverifiedTransactionPool.remove(transaction)
                     verifiedTransactonPool.append(transaction)
                     break
-                newlen = len(verifiedTransactonPool)
-                if(newlen > verlen):
-                    break 
+                
 
     

@@ -1,9 +1,12 @@
-unverifiedTransactionPool = []
-verifiedTransactonPool = []
+
 class node(object):
 
     import hashlib
     import random
+
+    def __init__(self, verifiedTransactionPool, unverifiedTransactionPool):
+        self.verifiedTransactionPool = verifiedTransactionPool
+        self.unverifiedTransactionPool = unverifiedTransactionPool
 
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
@@ -18,12 +21,36 @@ class node(object):
         # run through ledger to verify that transaction is valid and input has not been already spent
 
         # return true if transaction is valid
-        return 0
+
+        totalInput = 0
+        totalOutput = 0
+        tinput = transaction.tinput
+        toutput = transaction.toutput
+
+        # Verify 
+        for tTinput in tinput:
+            if tTinput[1] < 0.1:
+                return False
+
+            vOutput = self.verifiedTransactionPool[tTinput[0]].toutput[0]
+            if vOutput == tTinput[1]:
+                totalInput += vOutput
+                self.verifiedTransactionPool[tTinput[0]].toutput[0] = -1
+            else:
+                return False
+        
+        for output in toutput:
+            totalOutput += output[0]
+
+        if totalInput != totalOutput:
+            return False
+                    
+        return True
+
 
     def getTransactionFromPool(self):
-        global unverifiedTransactionPool
-        index = self.random.randint(0, len(unverifiedTransactionPool)-1)
-        transaction = unverifiedTransactionPool[index]
+        index = self.random.randint(0, len(self.unverifiedTransactionPool)-1)
+        transaction = self.unverifiedTransactionPool[index]
         
         return transaction
     
@@ -50,8 +77,8 @@ class node(object):
 
 
     def mineBlock(self):
-        while len(unverifiedTransactionPool) > 0:
-            verlen = len(verifiedTransactonPool)
+        while len(self.unverifiedTransactionPool) > 0:
+            verlen = len(self.verifiedTransactionPool)
             transaction = self.getTransactionFromPool()
 
             if(self.validTransaction(transaction) != "TRUE"):
@@ -60,14 +87,14 @@ class node(object):
             # Begin mining block
             block = self.createBaseBlock(transaction)
             while True:
-                newlen = len(verifiedTransactonPool)
+                newlen = len(self.verifiedTransactionPool)
                 if(newlen > verlen):
                     break 
                 randint = self.random.random()
                 block, nonce, hval = self.solvedPuzzle(block, randint)
                 if(block, nonce, hval != "", "", ""):
-                    unverifiedTransactionPool.remove(transaction)
-                    verifiedTransactonPool.append(transaction)
+                    self.unverifiedTransactionPool.remove(transaction)
+                    self.verifiedTransactionPool.append(transaction)
                     break
                 
 

@@ -1,8 +1,11 @@
-unverifiedTransactionPool = []
 class node(object):
 
     import hashlib
     import random
+
+    def __init__(self, transactionPool):
+        self.pool = transactionPool
+
 
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
@@ -26,11 +29,15 @@ class node(object):
         
         return transaction
     
-
+    def verifyMinedBlock(self, block):
+        # check that new block mined by network has valid transactions and 
+        # that the proof is work is correct ie it has the right hash
+        # To do that, hash the transaction (with some fields blanked out) to check that
+        # the hash matches 
     
     def solvedPuzzle(self, block, nonce):
         # Run proof of work
-        # hash the block with randomVal until the hash has n number of zeroes. denoted by difficulty argument
+        # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         hval = self.hashlib.sha256(block + str(nonce))
         if(hval < 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF):
@@ -38,14 +45,12 @@ class node(object):
         else:
             return "", "", ""
 
-
-
     def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 
         return 0
 
     def newBlockSolvedByNetwork(self):
-        # Check the node network to see if a block  has aleady been solved. 
+        # Check the node network to see if a block been solved. If so, stop will stop mining curr block
         # will  probably get updated ledger or maybe just new block
 
         # return true if new block
@@ -66,14 +71,8 @@ class node(object):
     # # infinite loop that calls mineBlock 
 
 
-    def mineBlock(self):
-        transaction = self.getTransactionFromPool()
-
-        if(self.validTransaction(transaction) != "TRUE"):
-            return 
-
+    def mineBlock(self, block):
         # Begin mining block
-        block = self.createBaseBlock(transaction)
         while True:
             randint = self.random.random()
             block, nonce, hval = self.solvedPuzzle(block, randint)
@@ -84,5 +83,21 @@ class node(object):
                 # Check the newtwork for new blocks that have been solved. stop the current mining 
                 self.receiveNewBlocks()
                 return 
+    
+    def run(self):
+        # main function for node 
+
+        # Get ledger from network
+        # verify transactions in ledger
+
+        # while True:
+        #     transaction = self.getTransactionFromPool()
+        #     if(self.validTransaction(transaction) != "TRUE"):
+        #     block = self.createBaseBlock(transaction)
+        #     mineBlock(block)
+        #     sleep(5) #Per the spec, wait 5 seconds
+
+        # node class test:
+        print("hello from node")
 
     

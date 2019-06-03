@@ -1,27 +1,10 @@
-<<<<<<< HEAD
-import threading 
-=======
 from threading import Thread
->>>>>>> driverWork
 import os
 # from node import *
 # from transaction import *
 # from transactionPool import *
 # from blockChain import *
-<<<<<<< HEAD
 
-
-class testNode(object):
-    def __init__(self, array):
-        arr = array
-    
-    for a in arr: 
-        print(a)
-
-    
-
-class driver(object):
-=======
 class testNode(object):    
     def run(self, arr):
         for a in arr: 
@@ -32,20 +15,13 @@ class testNode(object):
         
 
 class Driver(object):
->>>>>>> driverWork
     
     def __init__(self, numNodes, transactionsFile):
         self.numNodes = numNodes
         self.transactionsFile = transactionsFile
-<<<<<<< HEAD
-        # self.pool = TransactionPools(transactionsFile)
-
-
-=======
         # self.pool = TransactionPools(transactionsFile
 
     
->>>>>>> driverWork
     def run(self):
         # Initiate a simulation with n numNodes 
 
@@ -61,12 +37,6 @@ class Driver(object):
         # for node in range(self.numNodes):
         array = [10] * 10
 
-<<<<<<< HEAD
-        print("hello world")
-
-
-
-=======
         testND = testNode()
 
         print("hello world")
@@ -78,7 +48,6 @@ class Driver(object):
 
             t1.start()
             t2.start()
->>>>>>> driverWork
 
         # Launch numNodes number of nodes. pass in pool reference
         # Make sure that pool reference can be modified by the nodes. 
@@ -88,26 +57,15 @@ class Driver(object):
 
         # while True:
             # Call pool.newTransaction() at random times to add transactions to unverified pool
-<<<<<<< HEAD
-=======
             # Print out state of blockchain by reading verified transaction pool which holds
             # verified blocks 
->>>>>>> driverWork
             # maybe communicate with nodes in order to print out current status of blockchain
             # and to print out when new blocks have been solved 
 
 
-<<<<<<< HEAD
-
-
-# pool = Transaction(transactionFile)
-
-driver = driver(10, "transaction file")
-=======
 # pool = Transaction(transactionFile)
 
 driver = Driver(10, "transaction file")
->>>>>>> driverWork
 
 driver.run()
 

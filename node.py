@@ -1,4 +1,5 @@
 unverifiedTransactionPool = []
+verifiedTransactonPool = []
 class node(object):
 
     import hashlib
@@ -67,22 +68,24 @@ class node(object):
 
 
     def mineBlock(self):
-        transaction = self.getTransactionFromPool()
+        while len(unverifiedTransactionPool) > 0:
+            verlen = len(verifiedTransactonPool)
+            transaction = self.getTransactionFromPool()
 
-        if(self.validTransaction(transaction) != "TRUE"):
-            return 
-
-        # Begin mining block
-        block = self.createBaseBlock(transaction)
-        while True:
-            randint = self.random.random()
-            block, nonce, hval = self.solvedPuzzle(block, randint)
-            if(block, nonce, hval != "", "", ""):
-                self.broadcastNewBlock()
-            
-            if(self.newBlockSolvedByNetwork()):
-                # Check the newtwork for new blocks that have been solved. stop the current mining 
-                self.receiveNewBlocks()
+            if(self.validTransaction(transaction) != "TRUE"):
                 return 
+
+            # Begin mining block
+            block = self.createBaseBlock(transaction)
+            while True:
+                randint = self.random.random()
+                block, nonce, hval = self.solvedPuzzle(block, randint)
+                if(block, nonce, hval != "", "", ""):
+                    unverifiedTransactionPool.remove(transaction)
+                    verifiedTransactonPool.append(transaction)
+                    break
+                newlen = len(verifiedTransactonPool)
+                if(newlen > verlen):
+                    break 
 
     

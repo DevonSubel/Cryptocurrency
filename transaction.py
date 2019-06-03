@@ -11,7 +11,7 @@ class Transaction(object):
         self.prevTransHash = prevTransHash #Hash pointer to a previous transaction
         self.nonce #Nonce to be set and iterated when solving puzzle 
         self.proofOfWork #To be filled after the proof of work puzzle is solved
-
+ 
 
     def printFields(self):
         print(self.ttype)

@@ -25,6 +25,7 @@ class node(object):
         totalOutput = 0
         tinput = transaction.tinput
         toutput = transaction.toutput
+        signature transaction.signature
 
         # Verify 
         for tTinput in tinput: # For each Input do:

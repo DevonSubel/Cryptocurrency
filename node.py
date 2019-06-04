@@ -27,24 +27,24 @@ class node(object):
         toutput = transaction.toutput
 
         # Verify 
-        for tTinput in tinput:
-            if tTinput[1] < 0.1:
+        for tTinput in tinput: # For each Input do:
+            if tTinput[1] < 0.1: # Check that it's not less than min amount
                 return False
 
-            vOutput = self.verifiedTransactionPool[tTinput[0]].toutput[0]
-            if vOutput == tTinput[1]:
-                totalInput += vOutput
-                self.verifiedTransactionPool[tTinput[0]].toutput[0] = -1
+            vOutput = self.verifiedTransactionPool[tTinput[0]].toutput[0] # Get The Output pointed to
+            if vOutput == tTinput[1]: # Check that value is equal
+                totalInput += vOutput # Add the amount to the cumulative input in case input is from different places
+                self.verifiedTransactionPool[tTinput[0]].toutput[0] = -1 # Change Output so no future transaction can point to it
             else:
-                return False
+                return False # If they are not equal return false
         
-        for output in toutput:
+        for output in toutput: # Accumulate all output
             totalOutput += output[0]
 
-        if totalInput != totalOutput:
+        if totalInput != totalOutput: # Check that output and input are the same
             return False
                     
-        return True
+        return True # If this point has been reached the transaction is verified
 
 
     def getTransactionFromPool(self):

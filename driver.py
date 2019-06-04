@@ -52,6 +52,7 @@ class Driver(object):
         # Make sure that pool reference can be modified by the nodes. 
         # Figure out how first node will get ledger. probably pass in genesis block to every node
         # Per the spec, we might need to be able to set the intent of a node: malicious vs cooperative
+        # Per the spec, we might need to be able to set the speed of each node
 
 
         # while True:

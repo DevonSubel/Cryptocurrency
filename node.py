@@ -1,4 +1,3 @@
-
 class node(object):
 
     import hashlib

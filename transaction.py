@@ -9,7 +9,8 @@ class Transaction(object):
         self.toutput = toutput #A set of public key-coin values
         self.signatures = signatures #1 or more signatures, signed by whoever is spending coins
         self.prevTransHash = prevTransHash #Hash pointer to a previous transaction
- 
+        self.nonce #Nonce to be set and iterated when solving puzzle 
+       
 
     def printFields(self):
         print(self.ttype)

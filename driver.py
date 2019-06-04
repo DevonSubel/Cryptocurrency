@@ -4,7 +4,10 @@ import os
 # from transaction import *
 # from transactionPool import *
 # from blockChain import *
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 class testNode(object):    
     def run(self, arr):
         for a in arr: 
@@ -68,4 +71,3 @@ class Driver(object):
 driver = Driver(10, "transaction file")
 
 driver.run()
-

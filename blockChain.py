@@ -33,6 +33,10 @@ class blockchain(object):
     blockchainList = []
 
     def addToBlockchain(self, block):
+        if len(block) != 0:
+            prevblock = self.blockchainList[len(self.blockchainList) - 1]
+            prevhash = prevblock.proofOfWork
+            block.prevBlockHash = prevhash
         self.blockchainList.append(block)
 
     def getBlockchain(self):

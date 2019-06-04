@@ -1,8 +1,12 @@
-unverifiedTransactionPool = []
+
 class node(object):
 
     import hashlib
     import random
+
+    def __init__(self, verifiedTransactionPool, unverifiedTransactionPool):
+        self.verifiedTransactionPool = verifiedTransactionPool
+        self.unverifiedTransactionPool = unverifiedTransactionPool
 
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
@@ -17,12 +21,36 @@ class node(object):
         # run through ledger to verify that transaction is valid and input has not been already spent
 
         # return true if transaction is valid
-        return 0
+
+        totalInput = 0
+        totalOutput = 0
+        tinput = transaction.tinput
+        toutput = transaction.toutput
+
+        # Verify 
+        for tTinput in tinput:
+            if tTinput[1] < 0.1:
+                return False
+
+            vOutput = self.verifiedTransactionPool[tTinput[0]].toutput[0]
+            if vOutput == tTinput[1]:
+                totalInput += vOutput
+                self.verifiedTransactionPool[tTinput[0]].toutput[0] = -1
+            else:
+                return False
+        
+        for output in toutput:
+            totalOutput += output[0]
+
+        if totalInput != totalOutput:
+            return False
+                    
+        return True
+
 
     def getTransactionFromPool(self):
-        global unverifiedTransactionPool
-        index = self.random.randint(0, len(unverifiedTransactionPool)-1)
-        transaction = unverifiedTransactionPool[index]
+        index = self.random.randint(0, len(self.unverifiedTransactionPool)-1)
+        transaction = self.unverifiedTransactionPool[index]
         
         return transaction
     
@@ -44,45 +72,30 @@ class node(object):
         # creates base block from transaction to run it through the puzzle 
         return 0
 
-    def newBlockSolvedByNetwork(self):
-        # Check the node network to see if a block  has aleady been solved. 
-        # will  probably get updated ledger or maybe just new block
-
-        # return true if new block
-        # detect forks 
-        return 0
-
-    def broadcastNewBlock(self):
-        # Broadcast the blocks to other nodes since theyre threads in same program
-        # Figure out how to do this
-        return 0
-        
-
-
-    # Receive blocks from other nodes and update local ledger to 
-    def receiveNewBlocks(self):
-        print("checking for new solved blocks broadcast to newtwork")
 
     # # infinite loop that calls mineBlock 
 
 
     def mineBlock(self):
-        transaction = self.getTransactionFromPool()
+        while len(self.unverifiedTransactionPool) > 0:
+            verlen = len(self.verifiedTransactionPool)
+            transaction = self.getTransactionFromPool()
 
-        if(self.validTransaction(transaction) != "TRUE"):
-            return 
-
-        # Begin mining block
-        block = self.createBaseBlock(transaction)
-        while True:
-            randint = self.random.random()
-            block, nonce, hval = self.solvedPuzzle(block, randint)
-            if(block, nonce, hval != "", "", ""):
-                self.broadcastNewBlock()
-            
-            if(self.newBlockSolvedByNetwork()):
-                # Check the newtwork for new blocks that have been solved. stop the current mining 
-                self.receiveNewBlocks()
+            if(self.validTransaction(transaction) != "TRUE"):
                 return 
+
+            # Begin mining block
+            block = self.createBaseBlock(transaction)
+            while True:
+                newlen = len(self.verifiedTransactionPool)
+                if(newlen > verlen):
+                    break 
+                randint = self.random.random()
+                block, nonce, hval = self.solvedPuzzle(block, randint)
+                if(block, nonce, hval != "", "", ""):
+                    self.unverifiedTransactionPool.remove(transaction)
+                    self.verifiedTransactionPool.append(transaction)
+                    break
+                
 
     

@@ -15,5 +15,5 @@ def reader(filename):
          tansaction_list.append(one_trans)
    return tansaction_list
 
-reader("sampleInput.json")
+print(reader("sampleInput.json"))
 

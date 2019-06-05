@@ -5,7 +5,7 @@ from collections import OrderedDict
 def reader(filename):
    tansaction_list = []
    with open(filename) as json_file:
-      data = json.load(json_file, object_pairs_hook=OrderedDict)
+      data = json.load(json_file, object_pairs_hook = OrderedDict)
       print(data)
       for field in data:
          one_trans = data[field][0]

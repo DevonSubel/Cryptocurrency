@@ -30,7 +30,7 @@ class Driver(object):
 
         for elem in trans_list:
             print "--------------------------------"
-            if elem.signatures == "NULL":
+            if elem.tinput == ["NULL"]:
                 verifiedTransactionPool[elem.tid] = elem
                 continue
             unverifiedPool[elem.tid] = elem
@@ -78,7 +78,7 @@ class Driver(object):
         # while True:
             # Call pool.newTransaction() at random times to add transactions to unverified pool
             # Print out state of blockchain by reading verified transaction pool which holds
-            # verified blocks 
+            # verified blocks 2661b5b6f0153409c6401b82dd55b33c1f67840a4cb6661123cd8494d4cc9b64c612158c1ba45c2199a0eaee193daf90
             # maybe communicate with nodes in order to print out current status of blockchain
             # and to print out when new blocks have been solved 
 

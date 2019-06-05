@@ -9,6 +9,10 @@ class node(object):
         self.verifiedTransactionPool = verifiedTransactionPool
         self.unverifiedTransactionPool = unverifiedTransactionPool
 
+    def __init__(self, transactionPool):
+        self.pool = transactionPool
+
+
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
         # Each node will have to get a copy of the ledger
@@ -99,19 +103,21 @@ class node(object):
         
         return transaction
     
-
+    def verifyMinedBlock(self, block):
+        # check that new block mined by network has valid transactions and 
+        # that the proof is work is correct ie it has the right hash
+        # To do that, hash the transaction (with some fields blanked out) to check that
+        # the hash matches 
     
     def solvedPuzzle(self, block, nonce):
         # Run proof of work
-        # hash the block with randomVal until the hash has n number of zeroes. denoted by difficulty argument
+        # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce))
         if(hval < 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF):
             return block, nonce, hval 
         else:
             return "", "", ""
-
-
 
     def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 

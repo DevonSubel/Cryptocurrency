@@ -18,7 +18,7 @@ class Transaction(object):
         print(self.toutput)
     
     def toString(self):
-        return str(self.ttype) + str(self.tid) + str(self.tinput) + str(self.toutput) + str(self.signature)
+        return str(self.ttype) + str(self.tid) + str(self.tinput) + str(self.toutput) + str(self.signatures)
 
     # Figure out where to transfer, merge, join transactions
     #   # Transferring - one input to another input

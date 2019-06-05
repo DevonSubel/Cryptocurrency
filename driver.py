@@ -6,6 +6,7 @@ from node import *
 # from transaction import *
 # from transactionPool import *
 # from blockChain import *
+
 class testNode(object):    
     def run(self, arr):
         for a in arr: 

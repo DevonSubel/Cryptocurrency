@@ -1,35 +1,46 @@
 class Transaction(object):
-    
-    def __init__(self, ttype, tid, tinput, toutput, signature):
-        self.ttype = ttype
-        self.tid = tid
-        self.tinput = tinput
-        self.toutput = toutput
-        self.signature = signature
+    # Note: per the spec, it seems like a transaction is an actual block in the blockchain
+    # If so, we probably don't need a separate block class. 
 
+    def makeReady(self, list, index):
+        if list == [u"NULL"]:
+            return ["NULL"]
+        print "-------------------"
+        print list
+        for elem in list:
+            elem[index] = str(elem[index])
+        return list
+
+    def __init__(self, ttype, tid, tinput, toutput, signatures):
+        self.ttype = ttype
+        self.tid = tid #Transation ID: SHA256 Hash 
+        self.tinput = self.makeReady(tinput, 0) #Pointer to one or more prior transaction outputs
+        self.toutput = self.makeReady(toutput, 1) #A set of public key-coin values
+        self.signatures = [str(signatures[i]) for i in range(len(signatures))] #1 or more signatures, signed by whoever is spending coins
+        
+       
 
     def printFields(self):
         print(self.ttype)
         print(self.tid)
         print(self.tinput)
         print(self.toutput)
+        print("Sig: " + str(self.signatures))
+    
+    def toString(self):
+        return str(self.ttype) + str(self.tid) + str(self.tinput) + str(self.toutput) + str(self.signatures)
+
+    # Figure out where to transfer, merge, join transactions
+    #   # Transferring - one input to another input
+        # Merging: putting two inputs from the same person into a single transaction
+        # Joining: putting two inputs from different people into a single transction
+
+    # Example input & output 
+    # output = [(amount, key), (amount, key)]
+    # input = [(transaction, index), (transaction, index)]
 
 
-# Figure out where to transfer, merge, join transactions
-#   # Transferring - one input to another input
-    # Merging: putting two inputs from the same person into a single transaction
-    # Joining: putting two inputs from different people into a single transction
 
-# Example input & output 
-# output = [(amount, key), (amount, key)]
-# input = [(transaction, index), (transaction, index)]
-
-
-output = {}
-myinput = {}
-
-tra = Transaction("transfer", "id", "input" , "output", "signature")
-tra.printFields()
 
 
 

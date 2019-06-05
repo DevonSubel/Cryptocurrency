@@ -1,5 +1,7 @@
 from threading import Thread
 import os
+from inputReader import reader
+from node import *
 # from node import *
 # from transaction import *
 # from transactionPool import *
@@ -15,13 +17,31 @@ class testNode(object):
 
 class Driver(object):
     
-    def __init__(self, numNodes, transactionsFile):
-        self.numNodes = numNodes
-        self.transactionsFile = transactionsFile
-        # self.pool = TransactionPools(transactionsFile
+    # def __init__(self):
+    #     #self.numNodes = numNodes
+    #     #self.transactionsFile = transactionsFile
+    #     # self.pool = TransactionPools(transactionsFile
 
     
     def run(self):
+        trans_list = reader("sampleInput.json")
+        unverifiedPool = {}
+        verifiedTransactionPool = {}
+
+        for elem in trans_list:
+            print "--------------------------------"
+            if elem.signatures == "NULL":
+                verifiedTransactionPool[elem.tid] = elem
+                continue
+            unverifiedPool[elem.tid] = elem
+
+        print len(unverifiedPool)
+
+
+        nd = node(verifiedTransactionPool, unverifiedPool)
+
+        nd.mineBlock()
+
         # Initiate a simulation with n numNodes 
 
 
@@ -34,19 +54,19 @@ class Driver(object):
         # add genesis block to Verified Transaction Pool 
         
         # for node in range(self.numNodes):
-        array = [10] * 10
+        # array = [10] * 10
 
-        testND = testNode()
+        # testND = testNode()
 
-        print("hello world")
+        # print("hello world")
 
-        if __name__ == "__main__": 
-            for t in range()
-            t1 = Thread(target=testND.run(array), name='t1')
-            t2 = Thread(target=testND.run(array), name='t2')
+        # if __name__ == "__main__": 
+        #     for t in range()
+        #     t1 = Thread(target=testND.run(array), name='t1')
+        #     t2 = Thread(target=testND.run(array), name='t2')
 
-            t1.start()
-            t2.start()
+        #     t1.start()
+        #     t2.start()
 
         # Launch numNodes number of nodes. pass in pool reference
         # Make sure that pool reference can be modified by the nodes. 
@@ -65,6 +85,6 @@ class Driver(object):
 
 # pool = Transaction(transactionFile)
 
-driver = Driver(10, "transaction file")
+driver = Driver()
 
 driver.run()

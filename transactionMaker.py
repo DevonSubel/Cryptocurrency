@@ -43,9 +43,9 @@ data[0].append({
 tinput1 = [[number0, 0]]
 toutput1 = [[5, vk2.to_string().encode('hex')], [20, vk1.to_string().encode('hex')]]
 ttype1 = 'TRANS'
-sig1 = [sk1.sign(str(tinput1) + str(toutput1) + ttype1)] 
+sig1 = [sk1.sign(str(tinput1) + str(toutput1) + ttype1).encode("hex")] 
 
-number1 = hashlib.sha256(str(tinput1) + str(toutput1) + sig1).hexdigest()
+number1 = hashlib.sha256(str(tinput1) + str(toutput1) + str(sig1)).hexdigest()
 
 data[1] = []
 data[1].append({
@@ -62,9 +62,9 @@ data[2] = []
 tinput2 = [[number1, 1]]
 toutput2 = [[5, vk3.to_string().encode('hex')], [15, vk1.to_string().encode('hex')]]
 ttype2 = 'TRANS'
-sig2 = [sk1.sign(str(tinput2) + str(toutput2) + ttype2)] 
+sig2 = [sk1.sign(str(tinput2) + str(toutput2) + ttype2).encode("hex")] 
 
-number2 = hashlib.sha256(str(tinput2) + str(toutput2) + sig2).hexdigest()
+number2 = hashlib.sha256(str(tinput2) + str(toutput2) + str(sig2)).hexdigest()
 
 data[2].append({
    'NUMBER': number2,
@@ -80,9 +80,9 @@ data[3] = []
 tinput3 = [[number1, 0]]
 toutput3 = [[2, vk3.to_string().encode('hex')], [3, vk2.to_string().encode('hex')]]
 ttype3 = 'TRANS'
-sig3 = [sk2.sign(str(tinput3) + str(toutput3) + ttype3)] 
+sig3 = [sk2.sign(str(tinput3) + str(toutput3) + ttype3).encode("hex")] 
 
-number3 = hashlib.sha256(str(tinput3) + str(toutput3) + sig3).hexdigest()
+number3 = hashlib.sha256(str(tinput3) + str(toutput3) + str(sig3)).hexdigest()
 
 data[3].append({
    'NUMBER': number3,
@@ -98,9 +98,9 @@ data[4] = []
 tinput4 = [[number2, 0], [number3, 0]]
 toutput4 = [[3, vk4.to_string().encode('hex')], [4, vk3.to_string().encode('hex')]]
 ttype4 = 'TRANS'
-sig4 = [sk3.sign(str(tinput4) + str(toutput4) + ttype4)] 
+sig4 = [sk3.sign(str(tinput4) + str(toutput4) + ttype4).encode("hex")] 
 
-number4 = hashlib.sha256(str(tinput4) + str(toutput4) + sig4).hexdigest()
+number4 = hashlib.sha256(str(tinput4) + str(toutput4) + str(sig4)).hexdigest()
 
 data[4].append({
    'NUMBER': number4,
@@ -111,4 +111,4 @@ data[4].append({
 })
 
 with open('sampleInput.json','w') as outfile:
-    json.dump(data,outfile)
+    json.dump(data,outfile,indent=2)

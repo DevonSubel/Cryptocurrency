@@ -25,6 +25,15 @@ class node(object):
         totalOutput = 0
         tinput = transaction.tinput
         toutput = transaction.toutput
+        signatures = transaction.signatures
+
+        if len(signatures) != len(tinput):
+            return False
+        
+        for i in range(len(signatures)):
+            sig = signatures[i]
+            pubkey = tinput[i][0]
+
 
         # Verify 
         for tTinput in tinput: # For each Input do:
@@ -45,7 +54,6 @@ class node(object):
             return False
                     
         return True # If this point has been reached the transaction is verified
-
 
     def getTransactionFromPool(self):
         index = self.random.randint(0, len(self.unverifiedTransactionPool)-1)

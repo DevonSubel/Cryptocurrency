@@ -2,14 +2,13 @@ class Transaction(object):
     # Note: per the spec, it seems like a transaction is an actual block in the blockchain
     # If so, we probably don't need a separate block class. 
 
-    def __init__(self, ttype, tid, tinput, toutput, signatures, prevTransHash):
+    def __init__(self, ttype, tid, tinput, toutput, signatures):
         self.ttype = ttype
         self.tid = tid #Transation ID: SHA256 Hash 
         self.tinput = tinput #Pointer to one or more prior transaction outputs
         self.toutput = toutput #A set of public key-coin values
         self.signatures = signatures #1 or more signatures, signed by whoever is spending coins
-        self.prevTransHash = prevTransHash #Hash pointer to a previous transaction
-        self.nonce #Nonce to be set and iterated when solving puzzle 
+        
        
 
     def printFields(self):
@@ -31,11 +30,7 @@ class Transaction(object):
     # input = [(transaction, index), (transaction, index)]
 
 
-output = {}
-myinput = {}
 
-tra = Transaction("transfer", "id", "input" , "output", "signature")
-tra.printFields()
 
 
 

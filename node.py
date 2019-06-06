@@ -6,9 +6,10 @@ class node(object):
     import blockChain
     import time
 
-    def __init__(self, verifiedTransactionPool, unverifiedTransactionPool):
+    def __init__(self, verifiedTransactionPool, unverifiedTransactionPool, ledger):
         self.verifiedTransactionPool = verifiedTransactionPool
         self.unverifiedTransactionPool = unverifiedTransactionPool
+        self.ledger = ledger
 
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
@@ -92,17 +93,19 @@ class node(object):
         # Run proof of work
         # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
-        hval = self.hashlib.sha256(block.blockToStr() + str(nonce))
-        val = hval.hexdigest()
-        if(val[0:5] == '00000'):
+        hval = self.hashlib.sha256(block.blockToStr() + str(nonce)).hexdigest()
+        if(hval[0:5] == '00000'):
             return block, nonce, hval 
         else:
             return "", "", ""
 
     def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 
-        return self.blockChain.Block(transaction)
-
+        block = self.blockChain.Block(transaction)
+        length, leaves = self.ledger.getLongestChainBlocks()
+        prevBlock = self.random.choice(leaves)
+        block.prevBlockHash = prevBlock.proofOfWork
+        return block
 
     # # infinite loop that calls mineBlock 
 
@@ -137,6 +140,9 @@ class node(object):
                 randint = self.random.random()
                 block, nonce, hval = self.solvedPuzzle(block, randint)
                 if(block, nonce, hval != "", "", ""):
+                    block.nonce = nonce
+                    block.proofOfWork = hval
+                    self.ledger.addBlock(block)
                     del self.unverifiedTransactionPool[transaction.tid]
                     self.verifiedTransactionPool[transaction.tid] = transaction
                     break
@@ -192,7 +198,7 @@ def mersennePrimes(n):
             largePrime = num
 
         k += 1
-    return largePrime,math.log(largePrime+1,2)
+    return largePrime, math.log(largePrime+1,2)
 
 def isPrime(num):
     if num > 1:

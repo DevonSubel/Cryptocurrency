@@ -107,7 +107,7 @@ class Node(Thread):
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce)).hexdigest()
-        if(hval[0:2] == '00'):            
+        if(hval[0:5] == '00000'):            
             return block, nonce, hval 
         else:
             return "", "", ""
@@ -139,7 +139,6 @@ class Node(Thread):
 
             ret = self.validTransaction(transaction)
             if ret  == "No reference":
-                self.time.sleep(0.1)
                 continue
             if not ret:
                 print "Invalid transaction transaction."
@@ -171,7 +170,6 @@ class Node(Thread):
 
                     print("Solved puzzle! Adding to ledger.")
                     self.ledger.printBlockchain()
-                    time.sleep(5)
                     break
  
                 

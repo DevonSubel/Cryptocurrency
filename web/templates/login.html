@@ -1,0 +1,26 @@
+$def with (form, msg)
+<html>
+	<head>
+		<title>RUNNING OUT OF TIME</title>
+		<link href="static/calpoly.css" type='text/css' rel='stylesheet' />
+	</head>
+	<body>
+		<div id='topRow'> </div>
+		<div id='fakeContainer'> </div>
+		<div id='centerContainer'>
+			<center>
+			<form name ="main" method="post">
+				
+				<p align=center><font color="red">$msg</font></p>
+			
+				$if msg != "":			
+					<img src=$msg style='height: 420px;'>
+	
+				<p align=center><font color="red">$msg</font></p>
+			</form>
+			</center>
+		</div>
+		<div id='bottomRow'>
+		</div>
+	</body>
+</html>

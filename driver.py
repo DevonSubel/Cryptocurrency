@@ -52,6 +52,7 @@ class Driver(object):
             
             for t in range(3):
                 thread1 = Thread(target=Node(self.verifiedTransactionPool, self.unverifiedPool, self.ledger).mineBlock(), name=str(t))
+                thread2 = Thread(target=Node(self.verifiedTransactionPool, self.unverifiedPool, self.ledger).mineBlock(), name=str(t))
                 thread1.start()
                 
             

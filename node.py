@@ -109,12 +109,8 @@ class Node(Thread):
         block = self.blockChain.Block(transaction)
         length, leaves = self.ledger.getLongestChainBlocks()
         prevBlock = self.random.choice(leaves).data
-        print("prevblock")
-        print(prevBlock)
-        
+     
         block.prevBlockHash = prevBlock.proofOfWork
-        print("prevblockhsh")
-        print(block.prevBlockHash)
 
         return block
 
@@ -122,8 +118,7 @@ class Node(Thread):
 
 
     def mineBlock(self):
-        print("new thread")
-        print("Sup")
+        print("New thread")
         random.seed(time.time())
         while True:
             if len(self.unverifiedTransactionPool) == 0:
@@ -137,14 +132,15 @@ class Node(Thread):
             if ret  == "No reference":
                 continue
             if not ret:
-                print "Failed transaction"
+                print "Invalid transaction transaction."
                 del self.unverifiedTransactionPool[transaction.tid]
                 continue
             if ret:
-                print "Nice transaction"
+                print "Valid transaction."
             
             block = self.createBaseBlock(transaction)
             
+            print("Mining new block...")
             while True:
                 inpBlock = block
                 newlen = len(self.verifiedTransactionPool)
@@ -161,7 +157,7 @@ class Node(Thread):
                     del self.unverifiedTransactionPool[transaction.tid]
                     self.verifiedTransactionPool[transaction.tid] = transaction
 
-                    print("solved puzzle! adding to ledger")
+                    print("Solved puzzle! Adding to ledger.")
                     self.ledger.printBlockchain()
                     time.sleep(5)
                     break

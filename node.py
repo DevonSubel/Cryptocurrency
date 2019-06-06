@@ -92,7 +92,8 @@ class node(object):
         # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce))
-        if(hval < 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF):
+        val = hval.hexdigest()
+        if(val[0:5] == '00000'):
             return block, nonce, hval 
         else:
             return "", "", ""

@@ -1,2 +1,6 @@
 *.pyc
+<<<<<<< HEAD
 *./idea
+=======
+./idea
+>>>>>>> 1bec6eb6d74c4a7551bfe279b6fb7a4bdf84acb2

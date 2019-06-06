@@ -61,7 +61,7 @@ class Driver(object):
 
         # print("hello world")
 
-        if __name__ == "__main__":
+        #if __name__ == "__main__":
         #     for t in range()
         #     t1 = Thread(target=testND.run(array), name='t1')
         #     t2 = Thread(target=testND.run(array), name='t2')

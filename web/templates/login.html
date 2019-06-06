@@ -1,0 +1,46 @@
+$def with (form, msg)
+<html>
+	<head>
+		<title>T COIN COIN - Official Ledger</title>
+		<link href="static/bootstrap.css" type='text/css' rel='stylesheet' />
+	</head>
+	<body>
+		<!-- As a heading -->
+		<nav class="navbar navbar-dark bg-dark">
+			<span class="navbar-brand mb-0 h1">T COIN COIN</span>
+	  	</nav>
+
+		<ul class="nav" style="background-color: #9be0d1">
+			<li class="nav-item">
+				<a class="nav-link active" style="color: black;" href="#">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" style="color: black;" href="#">Ledger</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" style="color: black;" href="#">Invest</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" style="color: black;" href="#">About</a>
+			</li>
+		</ul>
+
+		<div id='fakeContainer' text-align='center'></div>
+		<br><br>
+		<div id='centerContainer'>
+			<center>
+			<h1> T COIN COIN </h1>
+			<h3>Official Ledger </h3>
+			<form name ="main" method="post">			
+				$if msg != "":			
+					<img src=$msg style='height: 420px;'>
+			</form>
+			</center>
+		</div>
+		<div id='bottomRow'>
+		</div>
+	</body>
+	<nav class="navbar navbar-dark bg-dark">
+		<span class="navbar-brand h3">Copyright T Coin Coin Agency</span>
+	</nav>
+</html>

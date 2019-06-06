@@ -95,27 +95,45 @@ class Blockchain(object):
         self.blockchain.to_graphviz(filename= outfilename + '.gv', shape=u'box', graph=u'digraph')
         g = Source.from_file(outfilename + '.gv')
         g.render()
+
+    def createBlockchainImg(self, outfilename):
+        print("creating graph")
+        self.blockchain.to_graphviz(filename= outfilename + '.gv', shape=u'box', graph=u'digraph')
+        g = Source.from_file(outfilename + '.png')
+        g.render()
     
 
 
-# def blockchainTest():
-#     transaction = Transaction("Gen", "Gensesis", "", "output", "", "")
+def blockchainTest():
+    transaction = Transaction("Gen", "1", ['NULL'], [[40, 'abc']], ['NULL'])
 
-#     gen = Block(transaction)
-#     gen.prevBlockHash = "11"
-#     gen.proofOfWork = "GenProof"
+    gen = Block(transaction)
+    gen.prevBlockHash = "11"
+    gen.proofOfWork = "GenProof"
 
-#     blockchain = Blockchain(gen)
-#     blockchain.printBlockchain()
+    blockchain = Blockchain(gen)
+    blockchain.printBlockchain()
 
-#     transaction = Transaction("merge", "tid", "input", "output", "signatures", "prevHash")
-#     block = Block(transaction)
-#     block.prevBlockHash = "GenProof"
-#     block.proofOfWork = "1Proof"
-#     blockchain.addBlock(block)
+    transaction = Transaction("Transfer", "2", [[1, 0]], [[20, 'fgh'], [20, 'abc']], ['sig1'])
+    block = Block(transaction)
+    block.prevBlockHash = "GenProof"
+    block.proofOfWork = "1Proof"
+    blockchain.addBlock(block)
 
-#     blockchain.printBlockchain()
+    transaction = Transaction("Transfer", "3", [[2, 0]], [[5, 'xyz'], [15, 'fgh']], ['sig2'])
+    block2 = Block(transaction)
+    block2.prevBlockHash = "GenProof"
+    block2.proofOfWork = "2Proof"
+    blockchain.addBlock(block2)
+
+    blockchain.printBlockchain()
+    #blockchain.createBlockchainImg('blockchainImg')
+
+    # JSON Test
+    return blockchain.blockchain.to_json()
 
 
 
-#blockchainTest()
+json = blockchainTest()
+print(json)
+

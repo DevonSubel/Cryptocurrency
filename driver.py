@@ -37,7 +37,6 @@ class Driver(object):
         self.initializePools()
         
         # for node in range(self.numNodes):
-        print("hello")
         if __name__ == "__main__":
             nd = node(self.verifiedTransactionPool, self.unverifiedPool)
             for t in range(self.numNodes):

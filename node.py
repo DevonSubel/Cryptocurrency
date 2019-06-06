@@ -80,7 +80,8 @@ class node(object):
         return transaction
     
     def verifyMinedBlock(self, block):
-        return 
+        return
+
         # check that new block mined by network has valid transactions and 
         # that the proof is work is correct ie it has the right hash
         # To do that, hash the transaction (with some fields blanked out) to check that

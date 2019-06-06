@@ -2,14 +2,12 @@ class Transaction(object):
     # Note: per the spec, it seems like a transaction is an actual block in the blockchain
     # If so, we probably don't need a separate block class. 
 
-    def makeReady(self, list, index):
-        if list == [u"NULL"]:
+    def makeReady(self, arr, index):
+        if arr == u"NULL":
             return ["NULL"]
-        print "-------------------"
-        print list
-        for elem in list:
+        for elem in arr:
             elem[index] = str(elem[index])
-        return list
+        return arr
 
     def __init__(self, ttype, tid, tinput, toutput, signatures):
         self.ttype = ttype

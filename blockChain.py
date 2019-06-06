@@ -36,10 +36,10 @@ class Blockchain(object):
         self.blockCount = 0
         self.blockchain = Tree()
         self.genesis = genesis
-        self.addBlock(genesis) #Add the genesis block to chain 
+        self.addGenesisBlock(genesis) #Add the genesis block to chain 
 
-    # def addGenesisBlock(self, genesis):
-    #     self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + genesis.proofOfWork[:10], genesis.proofOfWork, data=genesis)
+    def addGenesisBlock(self, genesis):
+        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + genesis.proofOfWork[:10], genesis.proofOfWork, data=genesis)
     
     def printBlockchain(self):
         self.blockchain.show()

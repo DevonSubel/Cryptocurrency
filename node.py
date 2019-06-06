@@ -1,3 +1,4 @@
+import time
 class node(object):
 
     import hashlib
@@ -93,8 +94,9 @@ class node(object):
         # Run proof of work
         # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
+        
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce)).hexdigest()
-        if(hval[0:5] == '00000'):
+        if(hval[0:5] == '00000'):            
             return block, nonce, hval 
         else:
             return "", "", ""
@@ -103,8 +105,14 @@ class node(object):
         # creates base block from transaction to run it through the puzzle 
         block = self.blockChain.Block(transaction)
         length, leaves = self.ledger.getLongestChainBlocks()
-        prevBlock = self.random.choice(leaves)
+        prevBlock = self.random.choice(leaves).data
+        print("prevblock")
+        print(prevBlock)
+        
         block.prevBlockHash = prevBlock.proofOfWork
+        print("prevblockhsh")
+        print(block.prevBlockHash)
+
         return block
 
     # # infinite loop that calls mineBlock 
@@ -131,21 +139,27 @@ class node(object):
             if ret:
                 print "Nice transaction"
             
-
-            # Begin mining block
             block = self.createBaseBlock(transaction)
+            
             while True:
+                inpBlock = block
                 newlen = len(self.verifiedTransactionPool)
                 if(newlen > verlen):
                     break 
                 randint = self.random.random()
-                block, nonce, hval = self.solvedPuzzle(block, randint)
-                if(block, nonce, hval != "", "", ""):
+                retBlock, nonce, hval = self.solvedPuzzle(inpBlock, randint)
+                
+                if retBlock != "" and nonce != "" and hval != "":
+                    
                     block.nonce = nonce
                     block.proofOfWork = hval
                     self.ledger.addBlock(block)
                     del self.unverifiedTransactionPool[transaction.tid]
                     self.verifiedTransactionPool[transaction.tid] = transaction
+
+                    print("solved puzzle! adding to ledger")
+                    self.ledger.printBlockchain()
+                    time.sleep(5)
                     break
  
                 

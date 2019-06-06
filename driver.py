@@ -43,6 +43,7 @@ class Driver(object):
         print(genesisTrans)
         
         genesisBlock = Block(genesisTrans)
+        genesisBlock.proofOfWork = hashlib.sha256(genesisBlock.blockToStr()).hexdigest()
         ledger = Blockchain(genesisBlock)
 
         # for node in range(self.numNodes):
@@ -50,7 +51,7 @@ class Driver(object):
         if __name__ == "__main__":
             jobs = []
             for t in range(3):
-                nd = node(self.verifiedTransactionPool, self.unverifiedPool)
+                nd = node(self.verifiedTransactionPool, self.unverifiedPool, ledger)
                 thread = Thread(target=nd.mineBlock(), name=str(t))
                 jobs.append(thread)
                 thread.daemon = True

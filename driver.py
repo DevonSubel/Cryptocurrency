@@ -21,30 +21,48 @@ class Driver(object):
         self.unverifiedPool = {}
         self.verifiedTransactionPool = {}
 
+        genesisKey = ''
+
         for elem in trans_list:
             print("--------------------------------")
             if elem.tinput == ["NULL"]:
                 self.verifiedTransactionPool[elem.tid] = elem
+                genesisKey = elem.tid
                 continue
             self.unverifiedPool[elem.tid] = elem
 
         print(len(self.unverifiedPool))
+        return genesisKey
 
 
     def run(self):
         # Initiate a simulation with n numNodes 
 
-        self.initializePools()
+        genesisKey = self.initializePools()
+        genesisTrans = self.verifiedTransactionPool[genesisKey]
+        print(genesisTrans)
         
-        # for node in range(self.numNodes):
-        if __name__ == "__main__":
-            nd = node(self.verifiedTransactionPool, self.unverifiedPool)
-            for t in range(self.numNodes):
-                t1 = Thread(target=nd.mineBlock(), name='t1')
-                t2 = Thread(target=nd.mineBlock(), name='t2')
+        genesisBlock = Block(genesisTrans)
+        ledger = Blockchain(genesisBlock)
 
-                t1.start()
-                t2.start()
+        # for node in range(self.numNodes):
+        print("luanching threads2222")
+        if __name__ == "__main__":
+            jobs = []
+            for t in range(3):
+                nd = node(self.verifiedTransactionPool, self.unverifiedPool)
+                thread = Thread(target=nd.mineBlock(), name=str(t))
+                jobs.append(thread)
+                thread.daemon = True
+            
+            print("numjobs" + str(len(jobs)))
+            for j in jobs:
+                print("starting job")
+                j.start()
+
+            for j in jobs:
+                j.join()
+               
 
         # Launch numNodes number of nodes. pass in pool reference
         # Make sure that pool reference can be modified by the nodes. 

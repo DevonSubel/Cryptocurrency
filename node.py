@@ -108,6 +108,7 @@ class node(object):
 
 
     def mineBlock(self):
+        print("new thread")
         print("Sup")
         while True:
             if len(self.unverifiedTransactionPool) == 0:

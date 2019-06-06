@@ -99,8 +99,8 @@ class Blockchain(object):
     def createBlockchainImg(self, outfilename):
         print("creating graph")
         self.blockchain.to_graphviz(filename= outfilename + '.gv', shape=u'box', graph=u'digraph')
-        g = Source.from_file(outfilename + '.png')
-        g.render()
+        g = Source.from_file(outfilename + '.gv')
+        g.render(format='png')
     
 
 

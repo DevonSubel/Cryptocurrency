@@ -34,6 +34,8 @@ class Driver(object):
         print(len(self.unverifiedPool))
         return genesisKey
 
+    def getBCImg(self):
+        self.ledger.createBlockchainImg('bc')
 
     def run(self):
         # Initiate a simulation with n numNodes 
@@ -56,6 +58,6 @@ class Driver(object):
                 thread1.start()
                 
 
-driver = Driver("sampleInput.json", 3)
+# driver = Driver("sampleInput.json", 3)
 
-driver.run()
+# driver.run()

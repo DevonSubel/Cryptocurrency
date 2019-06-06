@@ -45,6 +45,7 @@ class Node(Thread):
             key = tinput[i][0]
             outpIndex = tinput[i][1]
             if not key in self.verifiedTransactionPool:
+                print key
                 print("No reference")
                 return "No reference"
             pointedTrans = self.verifiedTransactionPool[key]
@@ -54,16 +55,23 @@ class Node(Thread):
             if inp < 0.1:
                 return 1
             totalInput += inp
-            vk =  self.VerifyingKey.from_string(pubkey.decode("hex"))
-
-            message = str(tinput[i]) + str(toutput) + str(pointedTrans.ttype)
             try:
+                vk =  self.VerifyingKey.from_string(pubkey.decode("hex"))
+            except AssertionError:
+                print "Double spend"
+                return False
+
+            message = str(tinput[i]) + str(toutput) + str(ttype)
+            try:
+                print "Key " + str(pubkey.decode("hex"))
                 vk.verify(sig.decode("hex"), message)
                 print "Good sig"
             except self.BadSignatureError:
+                print transaction.ttid
                 print "Bad sig"
                 return False
-              
+            
+        
         for outp in toutput:
             totalOutput += outp[0]
 
@@ -99,7 +107,7 @@ class Node(Thread):
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce)).hexdigest()
-        if(hval[0:5] == '00000'):            
+        if(hval[0:2] == '00'):            
             return block, nonce, hval 
         else:
             return "", "", ""
@@ -131,6 +139,7 @@ class Node(Thread):
 
             ret = self.validTransaction(transaction)
             if ret  == "No reference":
+                self.time.sleep(0.1)
                 continue
             if not ret:
                 print "Invalid transaction transaction."

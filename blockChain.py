@@ -39,7 +39,7 @@ class Blockchain(object):
         self.addGenesisBlock(genesis) #Add the genesis block to chain 
 
     def addGenesisBlock(self, genesis):
-        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + genesis.proofOfWork[:10], genesis.proofOfWork, data=genesis)
+        self.blockchain.create_node("Genesis Block" + " ID: " + genesis.proofOfWork[:12], genesis.proofOfWork, data=genesis)
     
     def printBlockchain(self):
         self.blockchain.show()
@@ -49,7 +49,7 @@ class Blockchain(object):
         # Add block to chain & return true if POW valid 
         # Else return false
         self.blockCount += 1
-        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + block.proofOfWork[:10], block.proofOfWork, parent=block.prevBlockHash, data=block)
+        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + block.proofOfWork[:12], block.proofOfWork, parent=block.prevBlockHash, data=block)
 
     def getGenesisID(self):
         return self.blockchain.root

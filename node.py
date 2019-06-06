@@ -34,11 +34,7 @@ class node(object):
         ttype = transaction.ttype
         signatures = transaction.signatures
 
-        print("###")
-        print(len(signatures))
-        print(len(tinput))
-        print("###")
-        transaction.printFields()
+
         if len(signatures) != len(tinput):
             return False
         
@@ -57,45 +53,29 @@ class node(object):
                 return 1
             totalInput += inp
             vk =  self.VerifyingKey.from_string(pubkey.decode("hex"))
-            print("Index" + str(i))
-            print(len(pointedTrans.tinput))
-            print(pointedTrans.tinput)
+
             message = str(tinput[i]) + str(toutput) + str(pointedTrans.ttype)
-            print(message)
-            print(message.encode("hex"))
             try:
                 vk.verify(sig.decode("hex"), message)
-                print("Good sig")
+                print "Good sig"
             except self.BadSignatureError:
-                print("Bad sig")
+                print "Bad sig"
+                return False
+              
+        for outp in toutput:
+            totalOutput += outp[0]
 
-        # for outp in toutput:
-        #     totalOutput += outp[0]
+        if totalInput != totalOutput: # Check that output and input are the same
+            return False
+           
+        for i in range(len(tinput)): # Before we confirm that it is a valid transaction, make sure we can't double spend in future
+            key = tinput[i][0]
+            outpIndex = tinput[i][1]
+            pointedTrans = self.verifiedTransactionPool[key]
+            pointedOutput = pointedTrans.toutput
+            pointedOutput[outpIndex][1] = "used"
 
-        # if totalInput != totalOutput: # Check that output and input are the same
-        #     return False
-                    
         return True # If this point has been reached the transaction is verified       
-        
-        # # Verify 
-        # for tTinput in tinput: # For each Input do:
-        #     if tTinput[1] < 0.1: # Check that it's not less than min amount
-        #         return False
-
-        #     vOutput = self.verifiedTransactionPool[tTinput[0]].toutput[0] # Get The Output pointed to
-        #     if vOutput == tTinput[1]: # Check that value is equal
-        #         totalInput += vOutput # Add the amount to the cumulative input in case input is from different places
-        #         self.verifiedTransactionPool[tTinput[0]].toutput[0] = -1 # Change Output so no future transaction can point to it
-        #     else:
-        #         return False # If they are not equal return false
-        
-        # for output in toutput: # Accumulate all output
-        #     totalOutput += output[0]
-
-        # if totalInput != totalOutput: # Check that output and input are the same
-        #     return False
-                    
-        # return True # If this point has been reached the transaction is verified
 
     def getTransactionFromPool(self):
         index = self.random.choice(list(self.unverifiedTransactionPool))
@@ -134,8 +114,14 @@ class node(object):
             verlen = len(self.verifiedTransactionPool)
             transaction = self.getTransactionFromPool()
 
-            if self.validTransaction(transaction) == "No reference":
+            ret = self.validTransaction(transaction)
+            if ret  == "No reference":
                 continue
+            if not ret:
+                print "Failed transaction"
+            if ret:
+                print "Nice transaction"
+            
 
             # Begin mining block
             block = self.createBaseBlock(transaction)

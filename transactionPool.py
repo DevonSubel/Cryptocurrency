@@ -50,7 +50,8 @@ class TransactionPools(object):
 
     def returnTransactionToUnverifiedPool(self, transaction):
         # TODO:
-        # Per the spect, if the transaction is invalid because the input doesn’t yet exist, return it to the UTP
+        print("retuning")
+        # Per the spect, if the transaction is invalid because the input doesn't yet exist, return it to the UTP
         
     
 # Tests:

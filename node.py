@@ -75,7 +75,7 @@ class Node(Thread):
             outpIndex = tinput[i][1]
             pointedTrans = self.verifiedTransactionPool[key]
             pointedOutput = pointedTrans.toutput
-            pointedOutput[outpIndex][1] = "used"
+            pointedOutput[outpIndex][1] = "used".encode("hex")
 
         return True # If this point has been reached the transaction is verified       
 

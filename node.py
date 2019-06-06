@@ -9,6 +9,10 @@ class node(object):
         self.verifiedTransactionPool = verifiedTransactionPool
         self.unverifiedTransactionPool = unverifiedTransactionPool
 
+    def __init__(self, transactionPool):
+        self.pool = transactionPool
+
+
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
         # Each node will have to get a copy of the ledger
@@ -16,7 +20,7 @@ class node(object):
         # detect any forks in the ledger. atuomatically switch to longest chain 
         # detect any forks 
         return 0
-    
+
     def validTransaction(self, transaction):
         # Make sure that a transaction has not been double-spent ie been used as the input to other transactions more than once. 
         # run through ledger to verify that transaction is valid and input has not been already spent
@@ -30,6 +34,7 @@ class node(object):
         ttype = transaction.ttype
         signatures = transaction.signatures
 
+
         if len(signatures) != len(tinput):
             return False
         
@@ -38,7 +43,7 @@ class node(object):
             key = tinput[i][0]
             outpIndex = tinput[i][1]
             if not key in self.verifiedTransactionPool:
-                print "No reference"
+                print("No reference")
                 return "No reference"
             pointedTrans = self.verifiedTransactionPool[key]
             pointedOutput = pointedTrans.toutput
@@ -48,15 +53,15 @@ class node(object):
                 return 1
             totalInput += inp
             vk =  self.VerifyingKey.from_string(pubkey.decode("hex"))
+
             message = str(tinput[i]) + str(toutput) + str(pointedTrans.ttype)
             try:
                 vk.verify(sig.decode("hex"), message)
-                pointedOutput[outpIndex][1] = "used"
                 print "Good sig"
             except self.BadSignatureError:
                 print "Bad sig"
                 return False
-
+              
         for outp in toutput:
             totalOutput += outp[0]
 
@@ -78,19 +83,21 @@ class node(object):
         
         return transaction
     
-
+    def verifyMinedBlock(self, block):
+        # check that new block mined by network has valid transactions and 
+        # that the proof is work is correct ie it has the right hash
+        # To do that, hash the transaction (with some fields blanked out) to check that
+        # the hash matches 
     
     def solvedPuzzle(self, block, nonce):
         # Run proof of work
-        # hash the block with randomVal until the hash has n number of zeroes. denoted by difficulty argument
+        # hash the block with randomVal until the hash has n number of zeroes
         # if the puzzle is solved, return the block + iterator value and the hash. this is the new block
         hval = self.hashlib.sha256(block.blockToStr() + str(nonce))
         if(hval < 0x00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF):
             return block, nonce, hval 
         else:
             return "", "", ""
-
-
 
     def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 
@@ -101,7 +108,7 @@ class node(object):
 
 
     def mineBlock(self):
-        print "Sup"
+        print("Sup")
         while len(self.unverifiedTransactionPool) > 0:
             print (len(self.unverifiedTransactionPool))
             verlen = len(self.verifiedTransactionPool)
@@ -128,7 +135,80 @@ class node(object):
                     del self.unverifiedTransactionPool[transaction.tid]
                     self.verifiedTransactionPool[transaction.tid] = transaction
                     break
+ 
                 
+
+    
+    
+def mersenneWork(n, prime):
+    # Initialize all entries of boolean
+    # array as true. A value in prime[i]
+    # will finally be false if i is Not
+    # a prime, else true bool prime[n+1]
+    for i in range(0, n + 1):
+        prime[i] = True
+
+    p = 2
+    while (p * p <= n):
+
+        # If prime[p] is not changed,
+        # then it is a prime
+        if (prime[p] == True):
+
+            # Update all multiples of p
+            for i in range(p * 2, n + 1, p):
+                prime[i] = False
+
+        p += 1
+
+# Function to generate mersenne
+# primes less than or equal to n
+def mersennePrimes(n):
+    # Create a boolean array
+    # "prime[0..n]"
+    prime = [0] * (n + 1)
+
+    # Generating primes using Sieve
+    mersenneWork(n, prime)
+
+    # Generate all numbers of the
+    # form 2^k - 1 and smaller
+    # than or equal to n.
+    k = 2
+    while (((1 << k) - 1) <= n):
+
+        num = (1 << k) - 1
+
+        # Checking whether number
+        # is prime and is one
+        # less then the power of 2
+        if (prime[num]):
+            #print(num)
+            largePrime = num
+
+        k += 1
+    return largePrime,math.log(largePrime+1,2)
+
+def isPrime(num):
+    if num > 1:
+        # Iterate from 2 to n / 2
+        for i in range(2, num // 2):
+
+            # If num is divisible by any number between
+            # 2 and n / 2, it is not prime
+            if (num % i) == 0:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+def verify(n,num):
+    print(num)
+    print(2**n-1)
+    if(2**n-1 != num):
+        return False
+    return isPrime(num)
 
 #5b5b2738323531613832343064616139646430386663333765353766316466333564653839346432623537316133316434653132653966343339343832656233663034272c20305d5d5b5b352c2027616136353535616532313463626638643739323233616135316432663034646235313332373832396138376635323430633338316633353164653462313861363732343864626331346162373336373938363362333131373663346136663131275d2c205b32302c2027633939353133653935306164306265393631373563316265346235336534396233616565326639323265653466663033623732333963376464623331393730373234653334303937353133623332316436663763616162383735336437306235275d5d5452414e53
 #5b5b2738323531613832343064616139646430386663333765353766316466333564653839346432623537316133316434653132653966343339343832656233663034272c20305d5d5b5b352c2027616136353535616532313463626638643739323233616135316432663034646235313332373832396138376635323430633338316633353164653462313861363732343864626331346162373336373938363362333131373663346136663131275d2c205b32302c2027633939353133653935306164306265393631373563316265346235336534396233616565326639323265653466663033623732333963376464623331393730373234653334303937353133623332316436663763616162383735336437306235275d5d5452414e53

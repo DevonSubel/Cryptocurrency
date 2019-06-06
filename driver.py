@@ -6,6 +6,7 @@ from node import *
 # from transaction import *
 # from transactionPool import *
 # from blockChain import *
+
 class testNode(object):    
     def run(self, arr):
         for a in arr: 
@@ -29,13 +30,13 @@ class Driver(object):
         verifiedTransactionPool = {}
 
         for elem in trans_list:
-            print "--------------------------------"
+            print("--------------------------------")
             if elem.tinput == ["NULL"]:
                 verifiedTransactionPool[elem.tid] = elem
                 continue
             unverifiedPool[elem.tid] = elem
 
-        print len(unverifiedPool)
+        print(len(unverifiedPool))
 
 
         nd = node(verifiedTransactionPool, unverifiedPool)
@@ -60,7 +61,7 @@ class Driver(object):
 
         # print("hello world")
 
-        # if __name__ == "__main__": 
+        if __name__ == "__main__":
         #     for t in range()
         #     t1 = Thread(target=testND.run(array), name='t1')
         #     t2 = Thread(target=testND.run(array), name='t2')

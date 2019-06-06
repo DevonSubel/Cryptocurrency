@@ -1,9 +1,10 @@
 import Crypto 
 import hashlib
-import transaction
+from transaction import *
+from graphviz import Digraph, Source
+from treelib import Node, Tree
 
-
-class block(object):
+class Block(object):
     # Block contains
         # single transaction
         # hash of previous block
@@ -12,7 +13,8 @@ class block(object):
     def __init__(self, transaction):
         self.transaction = transaction
         self.prevBlockHash = ''
-        self.proofOfWork = ''
+        self.proofOfWork = '' #Hash of 
+        self.nonce = '' #Nonce that solved the puzzle
 
     def blockToStr(self):
         transactionStr = self.transaction.toString()
@@ -27,24 +29,93 @@ class block(object):
         
         
 
-class blockchain(object):
+class Blockchain(object):
+    def __init__(self, genesis): 
+        # TODO: figure out if genesis should be passed in or created here
+        # self.tinput = tinput
+        self.blockCount = 0
+        self.blockchain = Tree()
+        self.genesis = genesis
+        self.addGenesisBlock(genesis) #Add the genesis block to chain 
 
-    # add blocks to some data structure. list is probably best 
-    blockchainList = []
+    def addGenesisBlock(self, genesis):
+        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + genesis.proofOfWork[:8], genesis.proofOfWork, data=genesis)
+    
+    def printBlockchain(self):
+        self.blockchain.show()
+    
+    def addBlock(self, block):
+        # TODO: run proof of work verification before adding block
+        # Add block to chain & return true if POW valid 
+        # Else return false
+        self.blockCount += 1
+        self.blockchain.create_node("Block " + str(self.blockCount) + " ID: " + block.proofOfWork[:8], block.proofOfWork, parent=block.prevBlockHash, data=block)
 
-    def addToBlockchain(self, block):
-        if len(block) != 0:
-            prevblock = self.blockchainList[len(self.blockchainList) - 1]
-            prevhash = prevblock.proofOfWork
-            block.prevBlockHash = prevhash
-        self.blockchainList.append(block)
+    def getGenesisID(self):
+        return self.blockchain.root
 
-    def getBlockchain(self):
-        return self.blockchainList
+    def getLongestChainBlocks(self):
+        allNodes = self.blockchain.all_nodes()
+        forkNum = 0 #number of leaves at longest branch
+        treeDepth = self.blockchain.depth()
+        longestPathLeaves = [] #WIll hold leaves with treeDepth depth ie longest branch(es)
+        for node in allNodes:
+            currentDepth = self.blockchain.depth(node)
+            if(currentDepth == treeDepth):
+                forkNum += 1
+                longestPathLeaves.append(node)        
 
-    def getBlockchainLength(self):
-        return len(self.blockchainList)
+        return forkNum, longestPathLeaves
+      
+            
+    def blockchainLength(self):
+        # returns the depth of the tree ie the length of 
+        #  the longest chain
+        return self.blockchain.depth()
+
+    def numBlocks(self):
+        return self.blockchain.size()
+
+    def printChain(self, chain):
+        chain.show(data_property="humanID")
+
+    def tailBlocks(self, chain):
+        leaves = chain.leaves()
+        print("Num leaves" + str(len(leaves)))
+        print(leaves)
+
+    def checkBlock(self):
+        # Check the proof work work
+        # return true if proof of work is valid
+        # else rerturn false 
+        print("printing block")
+
+    def createBlockchainGraph(self, outfilename):
+        print("creating graph")
+        self.blockchain.to_graphviz(filename= outfilename + '.gv', shape=u'box', graph=u'digraph')
+        g = Source.from_file(outfilename + '.gv')
+        g.render()
+    
+
+
+def blockchainTest():
+    transaction = Transaction("Gen", "Gensesis", "", "output", "", "")
+
+    gen = Block(transaction)
+    gen.prevBlockHash = "11"
+    gen.proofOfWork = "GenProof"
+
+    blockchain = Blockchain(gen)
+    blockchain.printBlockchain()
+
+    transaction = Transaction("merge", "tid", "input", "output", "signatures", "prevHash")
+    block = Block(transaction)
+    block.prevBlockHash = "GenProof"
+    block.proofOfWork = "1Proof"
+    blockchain.addBlock(block)
+
+    blockchain.printBlockchain()
 
 
 
-
+blockchainTest()

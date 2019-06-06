@@ -122,9 +122,10 @@ class Node(Thread):
         random.seed(time.time())
         while True:
             if len(self.unverifiedTransactionPool) == 0:
+                print("No new transactions. Waiting five seconds...")
                 self.time.sleep(5)
                 continue
-            print (len(self.unverifiedTransactionPool))
+            print("Unverified transactions in pool:" + str(len(self.unverifiedTransactionPool)))
             verlen = len(self.verifiedTransactionPool)
             transaction = self.getTransactionFromPool()
 
@@ -137,6 +138,8 @@ class Node(Thread):
                 continue
             if ret:
                 print "Valid transaction."
+            
+            print("Unverified transactions in pool:" + str(len(self.unverifiedTransactionPool)))
             
             block = self.createBaseBlock(transaction)
             

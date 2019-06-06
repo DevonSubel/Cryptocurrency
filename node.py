@@ -4,6 +4,7 @@ class node(object):
     import random
     from ecdsa import SigningKey, VerifyingKey, BadSignatureError
     import blockChain
+    import time
 
     def __init__(self, verifiedTransactionPool, unverifiedTransactionPool):
         self.verifiedTransactionPool = verifiedTransactionPool
@@ -108,7 +109,10 @@ class node(object):
 
     def mineBlock(self):
         print("Sup")
-        while len(self.unverifiedTransactionPool) > 0:
+        while True:
+            if len(self.unverifiedTransactionPool) == 0:
+                self.time.sleep(5)
+                continue
             print (len(self.unverifiedTransactionPool))
             verlen = len(self.verifiedTransactionPool)
             transaction = self.getTransactionFromPool()
@@ -118,6 +122,8 @@ class node(object):
                 continue
             if not ret:
                 print "Failed transaction"
+                del self.unverifiedTransactionPool[transaction.tid]
+                continue
             if ret:
                 print "Nice transaction"
             

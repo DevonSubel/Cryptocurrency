@@ -1,5 +1,8 @@
 import time
-class node(object):
+import random
+random.seed(time.time())
+from threading import Thread
+class Node(Thread):
 
     import hashlib
     import random
@@ -121,6 +124,7 @@ class node(object):
     def mineBlock(self):
         print("new thread")
         print("Sup")
+        random.seed(time.time())
         while True:
             if len(self.unverifiedTransactionPool) == 0:
                 self.time.sleep(5)

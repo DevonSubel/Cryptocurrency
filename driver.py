@@ -44,25 +44,17 @@ class Driver(object):
         
         genesisBlock = Block(genesisTrans)
         genesisBlock.proofOfWork = hashlib.sha256(genesisBlock.blockToStr()).hexdigest()
-        ledger = Blockchain(genesisBlock)
+        self.ledger = Blockchain(genesisBlock)
 
         # for node in range(self.numNodes):
         print("luanching threads2222")
         if __name__ == "__main__":
-            jobs = []
-            for t in range(3):
-                nd = node(self.verifiedTransactionPool, self.unverifiedPool, ledger)
-                thread = Thread(target=nd.mineBlock(), name=str(t))
-                jobs.append(thread)
-                thread.daemon = True
             
-            print("numjobs" + str(len(jobs)))
-            for j in jobs:
-                print("starting job")
-                j.start()
-
-            for j in jobs:
-                j.join()
+            for t in range(3):
+                thread1 = Thread(target=Node(self.verifiedTransactionPool, self.unverifiedPool, self.ledger).mineBlock(), name=str(t))
+                thread1.start()
+                
+            
                
 
         # Launch numNodes number of nodes. pass in pool reference

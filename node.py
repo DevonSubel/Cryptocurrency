@@ -9,9 +9,6 @@ class node(object):
         self.verifiedTransactionPool = verifiedTransactionPool
         self.unverifiedTransactionPool = unverifiedTransactionPool
 
-    def __init__(self, transactionPool):
-        self.pool = transactionPool
-
 
     def getLedgerFromNetwork(self):
         print("getting current ledger from network")
@@ -84,6 +81,7 @@ class node(object):
         return transaction
     
     def verifyMinedBlock(self, block):
+        return
         # check that new block mined by network has valid transactions and 
         # that the proof is work is correct ie it has the right hash
         # To do that, hash the transaction (with some fields blanked out) to check that
@@ -101,7 +99,7 @@ class node(object):
 
     def createBaseBlock(self, transaction):
         # creates base block from transaction to run it through the puzzle 
-        return self.blockChain.block(transaction)
+        return self.blockChain.Block(transaction)
 
 
     # # infinite loop that calls mineBlock 

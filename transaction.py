@@ -3,7 +3,7 @@ class Transaction(object):
     # If so, we probably don't need a separate block class. 
 
     def makeReady(self, arr, index):
-        if arr == u"NULL":
+        if arr == [u"NULL"]:
             return ["NULL"]
         for elem in arr:
             elem[index] = str(elem[index])

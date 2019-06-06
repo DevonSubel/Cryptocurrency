@@ -63,11 +63,11 @@ class Node(Thread):
 
             message = str(tinput[i]) + str(toutput) + str(ttype)
             try:
-                print "Key " + str(pubkey.decode("hex"))
+                #print "Key " + str(pubkey.decode("hex"))
                 vk.verify(sig.decode("hex"), message)
                 print "Good sig"
             except self.BadSignatureError:
-                print transaction.ttid
+                #print transaction.ttid
                 print "Bad sig"
                 return False
             
@@ -141,7 +141,7 @@ class Node(Thread):
             if ret  == "No reference":
                 continue
             if not ret:
-                print "Invalid transaction transaction."
+                print "Invalid transaction."
                 del self.unverifiedTransactionPool[transaction.tid]
                 continue
             if ret:

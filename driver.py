@@ -17,7 +17,7 @@ class Driver(object):
         # Load transactions from input file
         # Put genesis transaction into verified pool
         # Put the rest of the transactions into unverified pool
-        self.trans_list = reader(self.inputfile)
+        trans_list = reader(self.inputfile)
         self.unverifiedPool = {}
         self.verifiedTransactionPool = {}
 
@@ -34,15 +34,15 @@ class Driver(object):
     def run(self):
         # Initiate a simulation with n numNodes 
 
-        # self.initializePools()
+        self.initializePools()
         
         # for node in range(self.numNodes):
         print("hello")
         if __name__ == "__main__":
-            node = Node(self.verifiedTransactionPool, self.unverifiedPool)
+            nd = node(self.verifiedTransactionPool, self.unverifiedPool)
             for t in range(self.numNodes):
-                t1 = Thread(target=node.run(), name='t1')
-                t2 = Thread(target=node.run(), name='t2')
+                t1 = Thread(target=nd.mineBlock(), name='t1')
+                t2 = Thread(target=nd.mineBlock(), name='t2')
 
                 t1.start()
                 t2.start()
@@ -64,6 +64,6 @@ class Driver(object):
 
 # pool = Transaction(transactionFile)
 
-driver = Driver("inputfile", 3)
+driver = Driver("sampleInput.json", 3)
 
 driver.run()

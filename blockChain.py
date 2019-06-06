@@ -98,23 +98,23 @@ class Blockchain(object):
     
 
 
-def blockchainTest():
-    transaction = Transaction("Gen", "Gensesis", "", "output", "", "")
+# def blockchainTest():
+#     transaction = Transaction("Gen", "Gensesis", "", "output", "", "")
 
-    gen = Block(transaction)
-    gen.prevBlockHash = "11"
-    gen.proofOfWork = "GenProof"
+#     gen = Block(transaction)
+#     gen.prevBlockHash = "11"
+#     gen.proofOfWork = "GenProof"
 
-    blockchain = Blockchain(gen)
-    blockchain.printBlockchain()
+#     blockchain = Blockchain(gen)
+#     blockchain.printBlockchain()
 
-    transaction = Transaction("merge", "tid", "input", "output", "signatures", "prevHash")
-    block = Block(transaction)
-    block.prevBlockHash = "GenProof"
-    block.proofOfWork = "1Proof"
-    blockchain.addBlock(block)
+#     transaction = Transaction("merge", "tid", "input", "output", "signatures", "prevHash")
+#     block = Block(transaction)
+#     block.prevBlockHash = "GenProof"
+#     block.proofOfWork = "1Proof"
+#     blockchain.addBlock(block)
 
-    blockchain.printBlockchain()
+#     blockchain.printBlockchain()
 
 
 

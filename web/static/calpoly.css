@@ -1,0 +1,50 @@
+html {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+}
+body {
+   display: flex;
+   flex-direction: column;
+   min-height: 100%;
+}
+#rowText {
+   padding: 3px;
+   font-family: "Trebuchet MS", Tahoma, sans-serif;
+}
+#fakeContainer {
+   height: 200px;
+   background-color: #F6F6F6;
+}
+#centerContainer {
+   display: flex;
+   flex-direction: column;
+   height: 500px;
+   background-color: #F6F6F6;
+   justify-content: flex-start;
+   align-items: center;
+   text-align: center;
+}
+#topRow {
+   display: flex;
+   font-size: 20;
+   color: white;
+   background-color: #036228;
+   height: 50px;
+}
+#bottomRow {
+   display: flex;
+   font-size: 12;
+   color: grey;
+   background-color: #F6F6F6;
+   height: 50px;
+}
+#usernameBox {
+   font-family: "Trebuchet MS", Tahoma, sans-serif;
+}
+#passwordBox {
+   font-family: "Trebuchet MS", Tahoma, sans-serif;
+}
+#loginButton {
+   font-family: "Trebuchet MS", Tahoma, sans-serif;
+}

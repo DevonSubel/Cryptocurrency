@@ -1,0 +1,6 @@
+digraph tree {
+	"GenProof" [label="Block 0 ID: GenProof", shape=box]
+	"1Proof" [label="Block 1 ID: 1Proof", shape=box]
+
+	"GenProof" -> "1Proof"
+}
